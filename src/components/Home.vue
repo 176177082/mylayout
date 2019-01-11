@@ -18,8 +18,7 @@
               {{username}} <i class="el-icon-caret-bottom"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>关于yyyy</el-dropdown-item>
-            <el-dropdown-item>项目仓库</el-dropdown-item>
+            <el-dropdown-item>设置</el-dropdown-item>
             <el-dropdown-item divided command="loginout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -63,7 +62,8 @@
     methods: {
       // 侧边栏折叠
       collapseChage () {
-        this.collapse = !this.collapse
+        debugger
+        this.collapse = !this.collapse;
       }
     }
   }
