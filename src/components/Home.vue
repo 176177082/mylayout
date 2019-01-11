@@ -63,7 +63,7 @@
       // 侧边栏折叠
       collapseChage () {
         debugger
-        this.collapse = !this.collapse;
+        this.collapse = !this.collapse
       }
     }
   }
