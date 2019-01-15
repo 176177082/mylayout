@@ -44,21 +44,49 @@
       }
     },
     methods: {
-      ...mapActions([
-        'vuexLoginByUsername',
-        'vuexGetUserInfo'
-      ]),
+      // ...mapActions([
+      //   'vuexLoginByUsername',
+      //   'vuexGetUserInfo',
+      //   'vuexGetRegionTaskInfo'
+      // ]),
       handlelogin (formName) {
         console.log(this.loginForm.username)
         console.log(this.loginForm.password)
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.vuexLoginByUsername(this.loginForm).then(res => {
+            this.$store.dispatch('vuexLoginByUsername', this.loginForm).then(res => {
+            // this.vuexLoginByUsername(this.loginForm).then(res => {
+              console.log('wwww')
               console.log(res)
-              this.vuexGetUserInfo()
-              this.$router.push({
-                name: 'home'
+              this.$store.dispatch('vuexGetUserInfo').then(res => {
+                debugger
+                console.log('good user')
+                this.$store.dispatch('vuexGetRegionTaskInfo').then(res => {
+                  this.$router.push({
+                    name: 'home'
+                  })
+                })
+              }).catch((err) => {
+                debugger
+                console.log(err)
               })
+
+              // vuexGetUserInfo()
+              // this.$store.dispatch('vuexGetRegionTaskInfo')
+              // // debugger
+              // this.$router.push({
+              //   name: 'home'
+              // })
+              // this.vuexGetRegionTaskInfo().then(res => {
+              //   debugger
+              //   this.$router.push({
+              //     name: 'home'
+              //   })
+              // })
+              // setTimeout(alert('eee'), 3000)
+              // this.$router.push({
+              //   name: 'home'
+              // })
             })
           } else {
             console.log('error submit!!')

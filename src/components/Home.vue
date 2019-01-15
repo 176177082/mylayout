@@ -39,6 +39,32 @@
           <font-awesome-icon icon="clipboard-list" size="lg"/>
           <span slot="title"> 任务包划分</span>
         </el-menu-item>
+        <template v-for="item in regioname">
+          <template v-if="item.subs">
+            <el-submenu :index="item.index" :key="item.index">
+              <template slot="title">
+                <font-awesome-icon icon="home" size="lg"></font-awesome-icon><span slot="title">{{ item.title }}</span>
+              </template>
+              <template v-for="subItem in item.subs">
+                <el-submenu v-if="subItem.subs" :index="subItem.index" :key="subItem.index">
+                  <template slot="title">{{ subItem.title }}</template>
+                  <el-menu-item v-for="(threeItem,i) in subItem.subs" :key="i" :index="threeItem.index">
+                    {{ threeItem.title }}
+                  </el-menu-item>
+                </el-submenu>
+                <el-menu-item v-else :index="subItem.index" :key="subItem.index">
+                  {{ subItem.title }}
+                </el-menu-item>
+              </template>
+            </el-submenu>
+          </template>
+          <template v-else>
+            <el-menu-item :index="item.index" :key="item.index">
+              <font-awesome-icon icon="home" size="lg"></font-awesome-icon><span slot="title">{{ item.title }}</span>
+            </el-menu-item>
+          </template>
+        </template>
+
       </el-menu>
     </div>
     <div class="content-box" v-bind:class="{'content-collapse':collapse}">
@@ -51,18 +77,94 @@
 </template>
 
 <script>
+  import { removeToken } from '../libs/cookie'
+  import { mapState } from 'vuex'
+  import store from '../store'
+
   export default {
     name: 'Home',
     data () {
       return {
         collapse: false,
-        username: 'admin'
-       }
+        username: 'admin',
+        regioname: [],
+        items: [
+          {
+            icon: 'el-icon-lx-home',
+            index: 'dashboard',
+            title: '任务区域管理'
+          },
+          {
+            icon: 'el-icon-rank',
+            index: '2',
+            title: '2018东南方向1800幅',
+            subs: [
+              {
+                index: '/taskpackagelist',
+                title: '任务包列表'
+              },
+              {
+                index: '/taskpackagepartition',
+                title: '任务包列表划分'
+              }
+            ]
+          },
+          {
+            icon: 'el-icon-rank',
+            index: '1',
+            title: '2018东南方向1800幅1',
+            subs: [
+              {
+                index: '/taskpackagelist',
+                title: '任务包列表'
+              },
+              {
+                index: '/taskpackagepartition',
+                title: '任务包列表划分'
+              }
+            ]
+          }
+        ]
+      }
+    },
+  //   mounted: {
+  //     ...mapState([
+  //       'regiontasknames'
+  //     ]),
+  //     this.regioname = this.regiontasknames
+  //
+  // }
+  // ,
+    created () {
+      this.regioname = store.state.regiontask.regiontasknames
+      console.log('ppppp')
+      console.log(store.state.regiontask.regiontasknames)
+      console.log(this.regiontasknames)
+      this.setregioname()
+    },
+    // ...mapState('user', {
+    //   userName: state => state.userName
+    // }),
+    computed: {
+      ...mapState({
+        regiontasknames: state => state.regiontask.regiontasknames
+      })
     },
     methods: {
+      handleCommand (command) {
+        if (command === 'loginout') {
+          removeToken()
+          this.$router.push('/login')
+        }
+      },
+      setregioname () {
+        console.log('ppppp111111')
+        console.log(store.state.regiontask.regiontasknames)
+        this.regioname = store.state.regiontask.regiontasknames
+        console.log(this.regioname)
+      },
       // 侧边栏折叠
       collapseChage () {
-        debugger
         this.collapse = !this.collapse
       }
     }

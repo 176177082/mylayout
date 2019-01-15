@@ -1,6 +1,6 @@
 <template>
   <div>
-    i am 404
+    <p> i am 404 </p>
   </div>
 </template>
 

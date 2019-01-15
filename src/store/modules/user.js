@@ -1,4 +1,4 @@
-import { axiosLogin, axiosGetUserInfo } from '../../api/user'
+import { axiosLogin, axiosGetUserInfo } from '../../api/api'
 import { setCookieToken } from '../../libs/cookie'
 
 const state = {
@@ -40,8 +40,10 @@ const actions = {
     })
   },
   vuexGetUserInfo ({ commit, state }) {
+    debugger
     return new Promise((resolve, reject) => {
       axiosGetUserInfo().then(response => {
+        console.log('vuexGetUserInfo')
         console.log(response)
         const data = response.data
         const roles = []
@@ -53,6 +55,7 @@ const actions = {
         commit('SET_ROLES', roles)
         // 现在返回值中没有username
         commit('SET_USERNAME', data.username)
+        resolve(response)
       }).catch(error => {
         reject(error)
       })

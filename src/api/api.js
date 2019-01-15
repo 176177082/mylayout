@@ -30,3 +30,10 @@ export const axiosGetUserInfo = () => {
     method: 'get'
   })
 }
+
+export const axiosGetRegionTaskInfo = () => {
+  return axiosInstance({
+    url: '/regiontasks/',
+    method: 'get'
+  })
+}

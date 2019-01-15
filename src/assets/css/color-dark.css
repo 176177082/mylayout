@@ -1,6 +1,9 @@
 .header{
     background-color: #242f42;
 }
+.login-wrap{
+    background: #324157;
+}
 .collapse-btn:hover{
     background: rgb(40,52,70);
 }
